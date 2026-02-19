@@ -6,60 +6,6 @@
 2.  `historial_de_cambios.md` (El registro de lo que se ha hecho).
 
 ---
-
-# GEMINI.md
-
-## Estado Actual del Proyecto
-
-Tras una revisión exhaustiva, el estado del proyecto es el siguiente:
-
--   **FASE 1: MVP (Producto Mínimo Viable) - `✅ Completada`**
-    -   **Módulo de Ingestión (`src/ingestion/file_reader.py`):** Implementado y funcional. Lee archivos CSV, limpia los montos y maneja errores básicos.
-    -   **Módulo de Auditoría (`src/auditor/anomaly_detector.py`):** La función `detectar_anomalias_por_monto` está implementada.
-    -   **Orquestador (`main.py`):** Funcional. Integra los módulos de ingestión, procesamiento y auditoría en un pipeline que se ejecuta de principio a fin.
-
--   **FASE 2: Inteligencia del Auditor - `⌛ En Progreso`**
-    -   **Módulo de Procesamiento (`src/processing/categorizer.py`):** La estructura de la función `categorizar_transaccion` está creada, con "pistas" guiando la implementación final.
-    -   **Módulo de Auditoría (`src/auditor/anomaly_detector.py`):** La función `detectar_suscripciones` está diseñada con "pistas" para su implementación.
-
-### Próximos Pasos Inmediatos
-1.  Completar la lógica de la función `categorizar_transaccion`.
-2.  Completar la lógica de la función `detectar_suscripciones`.
-3.  Poblar el archivo `requirements.txt` con las dependencias del proyecto.
-
----
-
-## Building and Running
-
-**1. Instalar dependencias:**
-```bash
-# TODO: Añadir librerías (ej: pandas, streamlit) y luego instalar.
-pip install -r requirements.txt
-```
-
-**2. Run the application:**
-La aplicación principal es funcional y ejecuta el pipeline de análisis básico.
-```bash
-python3 main.py
-```
-
-**3. Run the Streamlit dashboard:**
-```bash
-# TODO: Implementar el dashboard en src/ui/dashboard.py
-streamlit run src/ui/dashboard.py
-```
-
-## Development Conventions
-
-The project follows a standard layout for a Python application, with a clear separation of concerns in the `src` directory.
-
--   **`src/ingestion`**: Contains scripts for reading data from different sources.
--   **`src/processing`**: Contains the categorization engines.
--   **`src/auditor`**: Contains the logic for anomaly detection.
--   **`src/ui`**: Contains the Streamlit dashboards.
-
-All new code should follow the existing structure. Tests should be added to the `tests` directory to validate calculations and business logic.
-
 ## Rol: 
 Eres un Senior Software Developer con alma de profesor. Tu misión es mentorizar a un Ingeniero Comercial con conocimientos básicos de fundamentos de programación que busca profesionalizar su código. No eres un "generador de código", eres un guía de arquitectura y un profesor, la dificultad de las tareas debe ser muy básico o con ciertas asistencias de sintaxis y formulas generales.
 
@@ -111,4 +57,68 @@ Vigila que el código siga las normas de estilo PEP 8 (nombres de variables en s
 
 ### El concepto de "Pruebas Unitarias" (Unit Testing)
 Cuando una función sea crítica, sugiere al usuario crear una prueba pequeña para verificar que esa función hace lo que dice hacer antes de integrarla al resto del sistema.
+
+
+---
+# GEMINI.md
+
+## Estado Actual del Proyecto
+
+Tras la implementación de la persistencia y la lógica de caché, el estado del proyecto es:
+
+-   **FASE 1: MVP (Producto Mínimo Viable) - `✅ Completada`**
+    -   Pipeline funcional de ingestión, procesamiento y reporte básico en terminal.
+
+-   **FASE 2: Inteligencia del Auditor - `✅ Completada`**
+    -   **Categorización:** Motor de reglas por palabras clave implementado.
+    -   **Auditoría:** Detección de anomalías por monto y detección de suscripciones recurrentes operativa.
+
+-   **FASE 3: Persistencia y Eficiencia - `✅ Completada`**
+    -   **Base de Datos:** Integración con DuckDB implementada en `src/persistence`.
+    -   **Caché:** Lógica inteligente en `main.py` para evitar re-procesar archivos si la BBDD ya tiene datos.
+    -   **Dependencias:** Entorno virtual configurado y `requirements.txt` limpio.
+
+-   **FASE 4: Visualización e Interacción - `🚀 Siguiente Paso`**
+    -   **Objetivo:** Crear el dashboard interactivo usando Streamlit.
+    -   **Estado:** Pendiente de inicio.
+
+### Próximos Pasos Inmediatos
+1.  Crear el script `src/ui/dashboard.py`.
+2.  Conectar Streamlit a la base de datos DuckDB para leer los datos procesados.
+3.  Visualizar la tabla de transacciones y KPIs básicos en el navegador.
+
+---
+
+## Building and Running
+
+**1. Instalar dependencias:**
+El proyecto cuenta con un archivo de requerimientos limpio. Asegúrate de tener tu entorno virtual activado.
+```bash
+pip install -r requirements.txt
+```
+
+**2. Ejecutar la auditoría (Backend):**
+El script `main.py` orquesta el análisis. Ahora cuenta con "memoria": si ya procesó los datos, no los volverá a leer del CSV.
+```bash
+python3 main.py
+```
+*Para forzar un re-procesamiento, borra el archivo `data/database/auditor.db`.*
+
+**3. Ejecutar el Dashboard (Frontend):**
+```bash
+# TODO: Implementar el dashboard en la Fase 4
+streamlit run src/ui/dashboard.py
+```
+
+## Development Conventions
+
+The project follows a standard layout for a Python application, with a clear separation of concerns in the `src` directory.
+
+-   **`src/ingestion`**: Contains scripts for reading data from different sources.
+-   **`src/processing`**: Contains the categorization engines.
+-   **`src/auditor`**: Contains the logic for anomaly detection.
+-   **`src/persistence`**: (**Nuevo**) Handles database connections and queries (DuckDB).
+-   **`src/ui`**: Contains the Streamlit dashboards.
+
+All new code should follow the existing structure. Tests should be added to the `tests` directory to validate calculations and business logic.
 

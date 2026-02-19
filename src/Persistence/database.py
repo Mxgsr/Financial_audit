@@ -39,6 +39,13 @@ def guardar_transacciones(df_transacciones):
     database.close()
     print(f"Se guardaron {len(df_transacciones)} transacciones en la base de datos.")
 
+
+def contar_transacciones():
+    database = duckdb.connect(DB_FILE)
+    resultado = database.execute("SELECT COUNT(*) FROM transacciones").fetchone()
+    database.close()
+
+    return resultado[0] if resultado else 0
 # TESTING
 
 if __name__ == "__main__":
@@ -49,9 +56,13 @@ if __name__ == "__main__":
         'Fecha': ['2026-01-05','2025-01-05'],
         'Descripcion': ['Cafeteria', 'Libreria'],
          'Monto': [5400, 15000],
-         'Categoria': ['Alimentacion','Ocio']   
+         'Categoria': ['Alimentacion','Ocio'],
+         'Tarjeta': ['Visa-0909', 'Mastercard-0903']  
     }
     df_prueba =pd.DataFrame(datos_de_prueba)
     print("Probando función para guardar transacciones...")
     guardar_transacciones(df_prueba)
+    conteo = contar_transacciones()
+    print(f"Conteo: Ahora hay {conteo} transacciones")
+
     print("\nProceso completado.")
