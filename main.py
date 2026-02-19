@@ -1,6 +1,6 @@
 from src.ingestion.file_reader import leer_transacciones_csv
 from src.processing.categorizer import categorizar_transaccion
-from src.auditor.anomaly_detector import detectar_anomalias_por_monto
+from src.auditor.anomaly_detector import detectar_anomalias_por_monto, detectar_suscripciones
 
 
 # --- CONFIGURACIÓN ---
@@ -34,13 +34,22 @@ def main():
 
 
     # 3. AUDITORÍA
-    # Pista 2: Llama a la función 'detectar_anomalias_por_monto'.
     # Necesita dos argumentos: la lista de 'transacciones' y la constante 'UMBRAL_ANOMALIA'.
     # Guarda el resultado (la lista de anomalías) en una nueva variable 'anomalias'.
     anomalias = detectar_anomalias_por_monto(transacciones, UMBRAL_ANOMALIA)
+    suscripciones = detectar_suscripciones(transacciones)
 
 
     # 4. REPORTE FINAL
+
+    print(f"\nSe encontraron {len(suscripciones)} grupos de suscripciones:")
+    for grupo in suscripciones:
+        nombre_suscripcion = grupo[0]['Descripcion'].strip().lower()
+        print(f"- Grupo '{nombre_suscripcion}': {len(grupo)} transacciones encontradas.")
+        for transaccion in grupo:
+            print(f"  - Monto: ${transaccion['Monto']}")
+    if not suscripciones:
+        print("- Ninguna.")
 
     print("\n--- Reporte de Auditoría: Anomalías de Monto ---")
 

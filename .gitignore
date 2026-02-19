@@ -1,5 +1,5 @@
 # History file
-historial_de_cambios.md
+# historial_de_cambios.md
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -23,4 +23,4 @@ ENV/
 .pytest_cache/
 .cache
 .coverage
-GEMINI.md
+# GEMINI.md

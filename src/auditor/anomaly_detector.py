@@ -23,50 +23,20 @@ def detectar_suscripciones(transacciones):
     Detecta posibles suscripciones agrupando transacciones por descripción similar.
     Una suscripción se considera un grupo de 2 o más transacciones.
     """
-    # Pista 1: El corazón de este detector es agrupar transacciones.
-    # Un diccionario es perfecto para esto: la clave será una descripción "limpia"
-    # y el valor será una lista de las transacciones que coinciden.
-    # Crea un diccionario vacío llamado 'grupos'.
-    
+    grupos = {}
 
-    # Pista 2: Recorre cada 'transaccion' en la lista de 'transacciones'.
-    
+    for transaccion in transacciones:
+        descripcion_limpia = transaccion["Descripcion"].lower().strip().replace(".", "")
+        lista_existente = grupos.get(descripcion_limpia, [])
+        lista_existente.append(transaccion)
+        grupos[descripcion_limpia] = lista_existente
 
-        # Pista 3: Para agrupar "Netflix" y "Netflix.", necesitamos "limpiar" la descripción.
-        # Usa .lower() y .strip() en la descripción de la transacción.
-        # Guarda esto en una variable 'descripcion_limpia'.
-        
+    suscripciones_detectadas = []
 
-        # Pista 4: Usa la 'descripcion_limpia' como clave para nuestro diccionario 'grupos'.
-        # El método .get() de los diccionarios es ideal aquí. Puedes obtener el valor de una clave,
-        # y si no existe, te devuelve un valor por defecto (en nuestro caso, una lista vacía).
-        # Por ejemplo: lista_existente = grupos.get(descripcion_limpia, [])
-        
-
-        # Pista 5: Añade la 'transaccion' actual a la lista que obtuviste en el paso anterior.
-        
-
-        # Pista 6: Actualiza el diccionario 'grupos' con la lista ya modificada.
-        # Por ejemplo: grupos[descripcion_limpia] = lista_actualizada
-        
-
-    # Pista 7: Ya tenemos los grupos. Ahora debemos filtrar los que son suscripciones.
-    # Crea una lista vacía llamada 'suscripciones_detectadas'.
-    
-
-    # Pista 8: Recorre los 'valores' de tu diccionario 'grupos'.
-    # Cada valor es una lista de transacciones.
-    # Por ejemplo: for grupo in grupos.values():
-    
-
-        # Pista 9: Dentro del bucle, si la longitud del 'grupo' (la lista) es mayor a 1,
-        # significa que hemos encontrado una suscripción.
-        # Si es así, añade el 'grupo' completo a 'suscripciones_detectadas'.
-        
-
-    # Pista 10: Devuelve la lista 'suscripciones_detectadas'.
-    
-    return []
+    for grupo in grupos.values():
+        if len(grupo) > 1:
+            suscripciones_detectadas.append(grupo)
+    return suscripciones_detectadas
 
 
 # Bloque de prueba para nuestros detectores.
