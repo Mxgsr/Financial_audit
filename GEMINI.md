@@ -179,3 +179,9 @@ Cuando una función sea crítica, sugiere al usuario crear una prueba pequeña p
         -   Uso del bloque `if __name__ == "__main__"` para pruebas a nivel de módulo.
         -   Depuración de errores comunes (`TypeError`, `NoneType` por falta de `return`).
         -   Se realizó el primer `git commit` del proyecto para versionar el código.
+-   **Próximos Pasos:**
+    -   Hacer que `main.py` sea el punto de entrada principal de la aplicación.
+    -   **Tarea:** Modificar `main.py` para que:
+        1.  Importe la función `leer_transacciones_csv` desde el módulo `src.ingestion.file_reader`.
+        2.  Llame a la función para obtener la lista de transacciones limpias.
+        3.  Imprima el resultado en la terminal para confirmar que la orquestación funciona.
