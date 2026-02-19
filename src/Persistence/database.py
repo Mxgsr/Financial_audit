@@ -12,10 +12,11 @@ def inicializar_base_datos():
     # 2. Definir la estructura de la tabla
     creat_tabla_sql = """
     CREATE TABLE IF NOT EXISTS transacciones (
-    Fecha TEXT,
+    Fecha_Trans TEXT,
     Descripcion TEXT,
     Monto REAL,
-    Categoria TEXT
+    Categoria TEXT,
+    Tarjeta TEXT
     );
     """
     # 3. Ejecutar el comando

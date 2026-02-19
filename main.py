@@ -1,6 +1,8 @@
 from src.ingestion.file_reader import leer_transacciones_csv
 from src.processing.categorizer import categorizar_transaccion
 from src.auditor.anomaly_detector import detectar_anomalias_por_monto, detectar_suscripciones
+import pandas as pd
+from src.persistence.database import inicializar_base_datos, guardar_transacciones
 
 
 # --- CONFIGURACIÓN ---
@@ -14,6 +16,8 @@ def main():
     """
     Función principal que orquesta la aplicación.
     """
+    inicializar_base_datos()
+
     ruta_archivo_transacciones = "data/raw/sample_transactions.csv"
     print(f"Iniciando el proceso de auditoría para el archivo: {ruta_archivo_transacciones}")
 
@@ -58,6 +62,13 @@ def main():
             print(f" - Alerta: Gasto de ${anomalia['Monto']} en {anomalia['Descripcion']}")
     else:
         print("No se encontraron gastos por encima del umbral.")
+
+    # 5. PERSISTENCIA FINAL
+    print("\nConvirtiendo datos para guardar en la base de datos...")
+    df_transacciones = pd.DataFrame(transacciones)
+    columnas = ['Fecha_Trans', 'Descripcion', 'Monto', 'Categoria', 'Tarjeta']
+    df_final= df_transacciones[columnas]
+    guardar_transacciones(df_final)
 
 
 
