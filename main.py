@@ -1,30 +1,48 @@
-# Pista 1: Para poder usar la función que creaste en otro archivo,
-# necesitas "importarla".
-# Desde el módulo "src.ingestion.file_reader", importa la función "leer_transacciones_csv".
 from src.ingestion.file_reader import leer_transacciones_csv
+from src.processing.categorizer import categorizar_transaccion
+
+
 
 def main():
     """
     Función principal que orquesta la aplicación.
     """
-    # Pista 2: Crea una variable llamada "ruta_archivo" que contenga
-    # el texto "data/raw/sample_transactions.csv".
-    # Esta variable nos dirá dónde están los datos que queremos leer.
-    ruta_archivo = "data/raw/sample_transactions.csv"
+    ruta_archivo_transacciones = "data/raw/sample_transactions.csv"
+    print(f"Iniciando el proceso de auditoría para el archivo: {ruta_archivo_transacciones}")
+
+    transacciones = leer_transacciones_csv(ruta_archivo_transacciones)
+
+    if not transacciones:
+        print("No se pudieron leer las transacciones. Finalizando.")
+        return
+
+    print("\n--- Procesando y Categorizando Transacciones ---")
+    # Pista 2: Necesitamos procesar cada transacción que leímos.
+    # Inicia un bucle 'for' para recorrer cada 'transaccion' en la lista 'transacciones'.
+    # for transaccion in transacciones:
+    for transaccion in transacciones:
+
+        # Pista 3: Dentro del bucle, por cada 'transaccion' (que es un diccionario),
+        # necesitamos obtener su descripción.
+        # Guarda el valor de la clave 'Descripcion' en una variable.
+        descripcion = transaccion['Descripcion']
+        # Pista 4: Con la descripción en una variable, es hora de usar nuestro nuevo módulo.
+        # Llama a la función 'categorizar_transaccion()' y pásale la descripción.
+        # Guarda el resultado en una variable llamada 'categoria_obtenida'.
+        categoria_obtenida = categorizar_transaccion(descripcion)
+        # Pista 5: ¡Ahora vamos a enriquecer nuestros datos!
+        # Añade una nueva clave al diccionario 'transaccion'.
+        # La clave debe ser 'Categoria' y su valor debe ser 'categoria_obtenida'.
+        # La sintaxis es: diccionario['nueva_clave'] = valor
+        transaccion['Categoria'] = categoria_obtenida
+
+    # Finalmente, imprimimos los datos enriquecidos.
+    print("\n--- Transacciones Enriquecidas con Categoría ---")
+    for transaccion in transacciones:
+        print(transaccion)
+    print("------------------------------------")
+    print(f"Se procesaron y categorizaron {len(transacciones)} transacciones.")
 
 
-    # Pista 3: Llama a la función "leer_transacciones_csv" que importaste.
-    # Pásale como argumento la variable "ruta_archivo" que acabas de crear.
-    # Guarda el resultado que te devuelve la función en una nueva variable llamada "transacciones".
-    transacciones = leer_transacciones_csv(ruta_archivo)
-
-    # Pista 4: Para verificar que todo funcionó, imprime la variable "transacciones" en la consola.
-    # Puedes usar la función print().
-    print(f"{transacciones}")
-
-
-
-# Este bloque es el punto de entrada. Le dice a Python que ejecute
-# la función "main" cuando corras el programa directamente.
 if __name__ == "__main__":
     main()
