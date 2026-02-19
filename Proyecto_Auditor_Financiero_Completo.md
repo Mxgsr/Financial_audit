@@ -22,15 +22,15 @@
     *   **Módulo de Persistencia:** Crear funciones para guardar las transacciones procesadas y enriquecidas en la base de datos.
     *   **Lógica de "Caché":** Modificar `main.py` para que, antes de leer un archivo CSV, compruebe si los datos de ese archivo ya fueron procesados y guardados en la base de datos.
 
-## Fase 4: Conexión con el Mundo Real
-*   **Objetivo:** Adaptar el sistema para que ingiera y procese datos de formatos de bancos reales.
-*   **Funcionalidades Propuestas:**
-    *   **Adaptadores de Ingestión:** Crear un "adaptador" específico en el módulo de ingestión para cada formato de archivo de banco que queramos soportar (ej: `leer_banco_santander.py`, `leer_banco_chile.py`).
-    *   **Manejo Avanzado de Errores:** Implementar una lógica más robusta para manejar fechas en distintos formatos, columnas con nombres diferentes, etc.
-
-## Fase 5: Visualización e Interacción
+## Fase 4: Visualización e Interacción
 *   **Objetivo:** Presentar los resultados de una forma amigable y útil para el usuario final.
 *   **Funcionalidades Propuestas:**
     *   **Dashboard con Streamlit:** Crear una interfaz de usuario web simple.
     *   **KPIs y Métricas Clave:** Mostrar tarjetas con "Gasto Total del Mes", "Categoría con Mayor Gasto", "Total de Suscripciones", etc.
     *   **Tablas y Gráficos Interactivos:** Usar gráficos de barra/torta para visualizar gastos por categoría y una tabla para explorar todas las transacciones.
+
+## Fase 5: Conexión con el Mundo Real
+*   **Objetivo:** Adaptar el sistema para que ingiera y procese datos de formatos de bancos reales.
+*   **Funcionalidades Propuestas:**
+    *   **Adaptadores de Ingestión:** Crear un "adaptador" específico en el módulo de ingestión para cada formato de archivo de banco que queramos soportar (ej: `leer_banco_santander.py`, `leer_banco_chile.py`).
+    *   **Manejo Avanzado de Errores:** Implementar una lógica más robusta para manejar fechas en distintos formatos, columnas con nombres diferentes, etc.
