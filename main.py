@@ -1,5 +1,12 @@
 from src.ingestion.file_reader import leer_transacciones_csv
 from src.processing.categorizer import categorizar_transaccion
+from src.auditor.anomaly_detector import detectar_anomalias_por_monto
+
+
+# --- CONFIGURACIÓN ---
+# Es una buena práctica definir valores que pueden cambiar, como el umbral,
+# en un solo lugar y en mayúsculas para indicar que son constantes.
+UMBRAL_ANOMALIA = 25000.0
 
 
 
@@ -17,31 +24,32 @@ def main():
         return
 
     print("\n--- Procesando y Categorizando Transacciones ---")
-    # Pista 2: Necesitamos procesar cada transacción que leímos.
-    # Inicia un bucle 'for' para recorrer cada 'transaccion' en la lista 'transacciones'.
-    # for transaccion in transacciones:
-    for transaccion in transacciones:
 
-        # Pista 3: Dentro del bucle, por cada 'transaccion' (que es un diccionario),
-        # necesitamos obtener su descripción.
-        # Guarda el valor de la clave 'Descripcion' en una variable.
+    for transaccion in transacciones:
         descripcion = transaccion['Descripcion']
-        # Pista 4: Con la descripción en una variable, es hora de usar nuestro nuevo módulo.
-        # Llama a la función 'categorizar_transaccion()' y pásale la descripción.
-        # Guarda el resultado en una variable llamada 'categoria_obtenida'.
         categoria_obtenida = categorizar_transaccion(descripcion)
-        # Pista 5: ¡Ahora vamos a enriquecer nuestros datos!
-        # Añade una nueva clave al diccionario 'transaccion'.
-        # La clave debe ser 'Categoria' y su valor debe ser 'categoria_obtenida'.
-        # La sintaxis es: diccionario['nueva_clave'] = valor
         transaccion['Categoria'] = categoria_obtenida
 
-    # Finalmente, imprimimos los datos enriquecidos.
-    print("\n--- Transacciones Enriquecidas con Categoría ---")
-    for transaccion in transacciones:
-        print(transaccion)
-    print("------------------------------------")
     print(f"Se procesaron y categorizaron {len(transacciones)} transacciones.")
+
+
+    # 3. AUDITORÍA
+    # Pista 2: Llama a la función 'detectar_anomalias_por_monto'.
+    # Necesita dos argumentos: la lista de 'transacciones' y la constante 'UMBRAL_ANOMALIA'.
+    # Guarda el resultado (la lista de anomalías) en una nueva variable 'anomalias'.
+    anomalias = detectar_anomalias_por_monto(transacciones, UMBRAL_ANOMALIA)
+
+
+    # 4. REPORTE FINAL
+
+    print("\n--- Reporte de Auditoría: Anomalías de Monto ---")
+
+    if len(anomalias) > 0:
+        for anomalia in anomalias:
+            print(f" - Alerta: Gasto de ${anomalia['Monto']} en {anomalia['Descripcion']}")
+    else:
+        print("No se encontraron gastos por encima del umbral.")
+
 
 
 if __name__ == "__main__":
