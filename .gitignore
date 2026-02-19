@@ -1,0 +1,26 @@
+# History file
+historial_de_cambios.md
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[co]
+*.pyc
+
+# OS-generated files
+.DS_Store
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# VSCode
+.vscode/
+
+# Test & Coverage
+.pytest_cache/
+.cache
+.coverage
+GEMINI.md
