@@ -11,6 +11,7 @@
 ## Fase 2: Inteligencia del Auditor
 *   **Objetivo:** Hacer que nuestro auditor sea más "inteligente" y nos dé insights más valiosos que solo gastos grandes.
 *   **Funcionalidades Propuestas:**
+    *   **Configuración de Ingresos:** Permitir al usuario definir fuentes de ingreso recurrentes (fijos y variables) para un análisis de flujo de caja completo.
     *   **Detector de Gastos Recurrentes:** Identificar suscripciones (Netflix, Spotify) o pagos mensuales (gimnasio, arriendo) que se repiten en descripción y monto.
     *   **Auditor de Presupuesto por Categoría:** Permitir definir un límite mensual por categoría (ej: "no más de $100.000 en 'Ocio'") y que el sistema alerte si nos pasamos.
     *   **Detector de Transacciones Duplicadas:** Buscar transacciones que parezcan idénticas (mismo monto y descripción en un corto periodo de tiempo), que suelen ser errores de cobro.
@@ -34,3 +35,10 @@
 *   **Funcionalidades Propuestas:**
     *   **Adaptadores de Ingestión:** Crear un "adaptador" específico en el módulo de ingestión para cada formato de archivo de banco que queramos soportar (ej: `leer_banco_santander.py`, `leer_banco_chile.py`).
     *   **Manejo Avanzado de Errores:** Implementar una lógica más robusta para manejar fechas en distintos formatos, columnas con nombres diferentes, etc.
+
+## Fase 6: Gestión de Patrimonio y Cuentas (Visión Extendida)
+*   **Objetivo:** Evolucionar de un análisis de flujo de caja a una gestión de patrimonio completo, entendiendo no solo a dónde va el dinero, sino dónde está.
+*   **Funcionalidades Propuestas:**
+    *   **Modelo de Datos Multi-Cuenta:** Modificar la base de datos para soportar múltiples cuentas (corrientes, de ahorro, tarjetas de crédito). Cada transacción se asignará a una cuenta.
+    *   **Cálculo de Patrimonio Neto:** El sistema calculará el patrimonio total sumando los saldos de las cuentas de activo y restando los pasivos (deudas de tarjetas de crédito).
+    *   **Transferencias entre Cuentas:** Implementar una forma de registrar transferencias entre tus propias cuentas para que no se contabilicen erróneamente como un ingreso o un gasto.
